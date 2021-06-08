@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.login.DbUtils.LocalDB;
+import com.example.login.DbUtils.User;
+
 public class signUp extends AppCompatActivity {
     EditText eUsername;
     EditText ePassword;
@@ -36,11 +39,23 @@ public class signUp extends AppCompatActivity {
                 String strConfirmPassword=eConfirmPassword.getText().toString();
 
                 if (strPassword!=null && strConfirmPassword!=null && strPassword.equalsIgnoreCase(strConfirmPassword)){
-                    SharedPreferences credentials=getSharedPreferences(CREDENTIAL_SHARED_PREF, Context.MODE_PRIVATE);
+                  /*  SharedPreferences credentials=getSharedPreferences(CREDENTIAL_SHARED_PREF, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor=credentials.edit();
                     editor.putString("Password",strPassword);
                     editor.putString("userName",strUserName);
-                    editor.commit();
+                    editor.commit();*/
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            User user=new User();
+                            User.setUsername(strUserName);
+                            user.setPassword(strPassword);
+                            LocalDB dbInstance=RoomImplementation.getmInstance().getDbInstance();
+                            dbInstance.userDao().createUser(user);
+
+                        }
+                    }).start();
 
                     signUp.this.finish();
                 }
