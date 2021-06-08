@@ -9,6 +9,14 @@ public interface UserDao {
 
     @Insert
     void createUser(User user);
-    @Query("SELECT *FROM  user where username like :strUsername")
-    User getUserByUserName(String strUsername);
+
+    @Query("SELECT *FROM  user where Username like :strUsername")
+    default User getUserByUserName() {
+        return getUserByUserName();
+    }
+
+    @Query("SELECT *FROM  user where Username like :strUsername")
+    default User getUserByUserName(String strUsername) {
+        return null;
+    }
 }
