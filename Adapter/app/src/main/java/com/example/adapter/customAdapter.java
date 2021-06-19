@@ -49,7 +49,11 @@ public class customAdapter extends BaseAdapter {
             view = LayoutInflater.from(context).inflate(R.layout.versionlistitem, viewGroup, false);
         }
         TextView txtVersionNumber= view.findViewById(R.id.tv_versionNumber);
-        TextView txtVersionNAme=view.findViewById(R.id.tv_versionName);
-        return  view;
+        TextView txtVersionName=view.findViewById(R.id.tv_versionName);
+
+        int i;
+        txtVersionName.setText(versionArrayList.get(i).getVersionName());
+        txtVersionNumber.setText("version"+versionArrayList.get(i).getVersionNumber());
+        return (View) view;
     }
 }
