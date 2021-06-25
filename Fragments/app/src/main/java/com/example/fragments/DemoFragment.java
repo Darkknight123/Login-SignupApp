@@ -1,17 +1,36 @@
 package com.example.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import org.jetbrains.annotations.NotNull;
+
 public class DemoFragment extends Fragment {
+
+    AndroidVersionInterface androidVersionInterface;
+
+    @Override
+    public void onAttach(@androidx.annotation.NonNull @NotNull Context context) {
+        super.onAttach(context);
+  try {
+    androidVersionInterface =(AndroidVersionInterface) context;
+    }catch (ClassCastException e){
+      Log.e("ClassCastException",e.toString());
+  }
+
+    }
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -23,6 +42,15 @@ public class DemoFragment extends Fragment {
 
         ListView listView = view.findViewById(R.id.list_view);
         listView.setAdapter(arrayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String strVersionName = ((TextView)view).getText().toString();
+                androidVersionInterface.onVersionItemClick(strVersionName);
+
+            }
+        });
         return view;
     }
 }
