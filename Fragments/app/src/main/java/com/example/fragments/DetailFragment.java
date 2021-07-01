@@ -22,6 +22,10 @@ public class DetailFragment extends Fragment {
         View view= inflater.from(getContext()).inflate(R.layout.detail_fragment_layout,container,false);
 
         TextView versionName=view.findViewById(R.id.version_name);
+
+        if (getArguments() != null && getArguments().getString("VersionName") != null){
+            versionName.setText(getArguments().getString("VersionName"));
+        }
         return view;
     }
 }
